@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!--
+    If you are serving your web app in a path other than the root, change the
+    href value below to reflect the base path you are serving from.
+
+    The path provided below has to start and end with a slash "/" in order for
+    it to work correctly.
+
+    For more details:
+    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+
+    This is a placeholder for base href that will be replaced by the value of
+    the `--base-href` argument provided to `flutter build`.
+  -->
+  <!--  <base href="/">-->
+
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="A new Flutter project.">
+
+  <!-- iOS meta tags & icons -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="sportsmeet">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png"/>
+
+  <title>龙珠大冒险</title>
+  <link rel="manifest" href="manifest.json">
+
+  <script>
+    // The value below is injected by flutter build, do not touch.
+    const serviceWorkerVersion = "3933886662";
+  </script>
+  <!-- This script adds the flutter initialization JS code -->
+  <script src="flutter.js" defer></script>
+
+  <style type="text/css">
+    /* 初始动画 */
+    .preloader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: white;
+      /*#ee6736*/
+      z-index: 9999;
+      transition: opacity .65s;
+      background-image: url('./assets/assets/guide.png');
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+    }
+
+    .preloader-hidden-add {
+      opacity: 1;
+      display: block
+    }
+
+    .preloader-hidden-add-active {
+      opacity: 0
+    }
+
+    .preloader-hidden {
+      display: none
+    }
+
+    .cs-loader {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%
+    }
+
+    .cs-loader-inner {
+      transform: translateY(-50%);
+      top: 50%;
+      position: absolute;
+      width: 100%;
+      color: #EF5138;
+      text-align: center
+    }
+
+    .cs-loader-inner label {
+      font-size: 20px;
+      opacity: 0;
+      display: inline-block
+    }
+
+    @keyframes lol {
+      0% {
+        opacity: 0;
+        transform: translateX(-300px)
+      }
+
+      33% {
+        opacity: 1;
+        transform: translateX(0)
+      }
+
+      66% {
+        opacity: 1;
+        transform: translateX(0)
+      }
+
+      100% {
+        opacity: 0;
+        transform: translateX(300px)
+      }
+    }
+
+    .cs-loader-inner label:nth-child(6) {
+      animation: lol 3s infinite ease-in-out
+    }
+
+    .cs-loader-inner label:nth-child(5) {
+      animation: lol 3s .1s infinite ease-in-out
+    }
+
+    .cs-loader-inner label:nth-child(4) {
+      animation: lol 3s .2s infinite ease-in-out
+    }
+
+    .cs-loader-inner label:nth-child(3) {
+      animation: lol 3s .3s infinite ease-in-out
+    }
+
+    .cs-loader-inner label:nth-child(2) {
+      animation: lol 3s .4s infinite ease-in-out
+    }
+
+    .cs-loader-inner label:nth-child(1) {
+      animation: lol 3s .5s infinite ease-in-out
+    }
+  </style>
+
+</head>
+<body>
+<div id="app_splash">
+  <div class="preloader">
+    <div class="cs-loader">
+      <div class="cs-loader-inner">
+        <label> ●</label>
+        <label> ●</label>
+        <label> ●</label>
+        <label> ●</label>
+        <label> ●</label>
+        <label> ●</label>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+
+    console.log('window.location.href------'+window.location.href);
+      /// 获取传值
+	const getParameters = (URL) => {
+      console.log('URL------'+URL);
+	  URL = JSON.parse('{"' + decodeURI(URL.split("?")[1].split("#")[0]).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"') +'"}');
+	  console.log('URL------'+JSON.stringify(URL));
+	  return JSON.stringify(URL);
+	};
+	if(window.location.href.indexOf('?')!=-1){
+		 let data = JSON.parse(getParameters(window.location.href));
+		 console.log('data------'+JSON.stringify(data));
+		 let keys = Object.keys(data);
+		 for(let i=0;i<keys.length;i++){
+			// 存储数据
+			localStorage.setItem('flutter.'+keys[i],JSON.stringify(data[keys[i]]));
+		 }
+	}
+
+    window.addEventListener('load', function(ev) {
+      // Download main.dart.js
+      _flutter.loader.loadEntrypoint({
+        serviceWorker: {
+          serviceWorkerVersion: serviceWorkerVersion,
+        },
+        onEntrypointLoaded: function(engineInitializer) {
+          engineInitializer.initializeEngine().then(function(appRunner) {
+            appRunner.runApp();
+            setTimeout(function(){
+              document.getElementById("app_splash")?.remove();
+            },1000)
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
